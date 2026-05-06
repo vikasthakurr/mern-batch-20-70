@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      HTML INPUT ELEMENTS
+      The <input> element is one of the most versatile and used elements in HTML. 
+      It is used to create interactive controls for web-based forms to accept data from the user.
+
+      COMMON ATTRIBUTES:
+      1. type: Defines the type of input (e.g., text, email, password, checkbox, etc.).
+      2. name: Used as a key when sending data to the server (crucial for backend processing).
+      3. id: A unique identifier for the element, used for CSS, JavaScript, and linking <label>s.
+      4. placeholder: A short hint displayed in the input field before the user enters a value.
+      5. value: The default value or the data currently in the input.
+      6. required: Ensures the field must be filled out before submitting.
+
+      NAME vs ID:
+      - 'name' is for the server (how the data is labeled in the request).
+      - 'id' is for the browser/client (for styling, scripts, and accessibility).
+
+      ACCESSIBILITY TIP:
+      Always use <label> elements with inputs. The 'for' attribute of the label 
+      should match the 'id' of the input. This makes the form usable for screen readers 
+      and allows users to click the label to focus the input.
+    -->
+
+    <form action="" method="post">
+      <div>
+        <label for="username">Username:</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Enter your name"
+          required
+        />
+      </div>
+
+      <div>
+        <label for="email">Email Address:</label>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          placeholder="Enter email" 
+          required
+        />
+      </div>
+
+      <!-- Password Input: Masks characters -->
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required />
+      </div>
+
+      <!-- Number Input: Allows only numeric values -->
+      <div>
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" min="1" max="100" />
+      </div>
+
+      <!-- Date Input: Displays a date picker -->
+      <div>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" name="dob" id="dob" />
+      </div>
+
+      <!-- Checkbox: Binary choice (checked/unchecked) -->
+      <div>
+        <input type="checkbox" name="subscribe" id="subscribe" value="yes" />
+        <label for="subscribe">Subscribe to newsletter</label>
+      </div>
+
+      <!-- Radio Buttons: Select one from a group (same name, different ids) -->
+      <fieldset>
+        <legend>Gender:</legend>
+        <input type="radio" name="gender" id="male" value="male" />
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="female" value="female" />
+        <label for="female">Female</label>
+      </fieldset>
+
+      <!-- Color Picker -->
+      <div>
+        <label for="favcolor">Favorite Color:</label>
+        <input type="color" name="favcolor" id="favcolor" value="#ff0000" />
+      </div>
+
+      <!-- File Upload -->
+      <div>
+        <label for="profile_pic">Profile Picture:</label>
+        <input type="file" name="profile_pic" id="profile_pic" />
+      </div>
+
+      <!-- Range Slider -->
+      <div>
+        <label for="volume">Volume (0-100):</label>
+        <input type="range" name="volume" id="volume" min="0" max="100" />
+      </div>
+
+      <input type="submit" value="Submit Form" />
+    </form>
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+      WEB ACCESSIBILITY (A11y)
+      Web accessibility means that websites, tools, and technologies are designed and developed 
+      so that people with disabilities can use them. This includes people with visual, 
+      auditory, physical, speech, cognitive, and neurological disabilities.
+
+      WHY IT MATTERS:
+      1. Inclusivity: Ensures everyone has equal access to information and services.
+      2. SEO: Many accessibility practices (like alt text) also improve search engine rankings.
+      3. Legal Compliance: Many countries have laws requiring web accessibility (e.g., ADA, WCAG).
+      4. Better UX: Accessible sites are often easier for everyone to use (e.g., clear navigation).
+
+      ARIA (Accessible Rich Internet Applications)
+      ARIA is a set of attributes that help make web content and applications more accessible 
+      to people with disabilities, especially those who use screen readers. 
+      It fills the gaps where standard HTML elements fall short.
+
+      IMPORTANT ARIA CONCEPTS:
+      - Roles: Define what an element is (e.g., role="progressbar", role="button").
+      - States: Define the current condition of an element (e.g., aria-disabled="true").
+      - Properties: Define characteristics of an element (e.g., aria-label="Close").
+
+      BEST PRACTICE: 
+      "First rule of ARIA": If you can use a native HTML element (like <button> or <progress>) 
+      that has the behavior you need built-in, do that instead of using ARIA.
+    -->
+
+    <!-- Example: Progress Bar using ARIA roles and properties -->
+    <div
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="60"
+      aria-label="Loading progress"
+    ></div>
+
+    <!-- Example: Image Container with ARIA label -->
+    <div role="region" aria-label="Featured Image Section">
+      <img src="placeholder.jpg" alt="A descriptive description of the image" />
+    </div>
+  </body>
+</html>
