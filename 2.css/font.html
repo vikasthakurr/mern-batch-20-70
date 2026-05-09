@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      /* 
+      CSS Font Properties Notes:
+      1. font-family: Specifies the font for an element. 
+         - It can hold several font names as a "fallback" system.
+         - Generic families: serif, sans-serif, monospace, cursive, fantasy.
+      2. font-size: Sets the size of the font.
+         - Absolute units: px.
+         - Relative units: em, rem (relative to root), %, vh/vw (viewport).
+      3. font-weight: Sets how thick or thin characters in text should be displayed.
+         - Values: normal, bold, bolder, lighter, or 100 to 900.
+      4. font-style: Specifies the font style for text.
+         - Values: normal, italic, oblique.
+      5. font-variant: Specifies whether or not a text should be displayed in a small-caps font.
+      6. line-height: Specifies the height of a line.
+      7. Google Fonts: External fonts can be imported using @import or <link>.
+      */
+
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        padding: 20px;
+      }
+
+      h1 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 900;
+        font-size: 3rem;
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .italic-text {
+        font-style: italic;
+      }
+
+      .bold-text {
+        font-weight: bold;
+      }
+
+      .small-caps {
+        font-variant: small-caps;
+      }
+
+      .custom-size {
+        font-size: 24px;
+      }
+
+      .rem-size {
+        font-size: 1.5rem; /* 1.5 times the root font size */
+      }
+
+      .line-height-demo {
+        line-height: 2.5;
+        background-color: #f9f9f9;
+        padding: 10px;
+        border-left: 5px solid #3498db;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Font Properties</h1>
+    <p>This is a standard paragraph using the default body font (Roboto).</p>
+    
+    <p class="italic-text">This text is italicized using font-style: italic.</p>
+    <p class="bold-text">This text is bold using font-weight: bold.</p>
+    <p class="small-caps">This text uses font-variant: small-caps.</p>
+    
+    <p class="custom-size">This text has a custom size of 24px.</p>
+    <p class="rem-size">This text has a size of 1.5rem.</p>
+
+    <div class="line-height-demo">
+      <p>This div demonstrates line-height: 2.5.</p>
+      <p>Notice the large vertical space between these lines of text compared to the standard paragraphs above.</p>
+    </div>
+  </body>
+</html>

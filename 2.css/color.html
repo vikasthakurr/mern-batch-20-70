@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Color Systems</title>
+    <style>
+      /* 
+      CSS COLOR SYSTEMS NOTES:
+
+      1. Named Colors: 140 standard color names (e.g., red, blue, steelblue, tomato).
+      
+      2. HEX (Hexadecimal): 
+         - Format: #RRGGBB (00 to FF).
+         - Shorthand: #RGB (if pairs are identical, e.g., #f00 is #ff0000).
+         - Alpha: #RRGGBBAA (e.g., #ff000080 is 50% transparent red).
+
+      3. RGB (Red, Green, Blue):
+         - Format: rgb(red, green, blue) (Values 0-255).
+         - Transparency: rgba(r, g, b, alpha) or the newer rgb(r g b / alpha) syntax.
+
+      4. HSL (Hue, Saturation, Lightness):
+         - Hue: 0-360 (position on color wheel).
+         - Saturation: 0-100% (gray to vibrant).
+         - Lightness: 0-100% (black to white).
+         - Why HSL? It's much more intuitive for humans to adjust (e.g., "make it darker" just means lowering L).
+
+      5. Modern Color Spaces (CSS Level 4+):
+         - oklch(L C H): Lightness, Chroma (vividness), Hue. Perceptually uniform, great for accessibility.
+         - lab(): Perceptually uniform color space.
+         - display-p3: High-gamut colors for modern screens.
+
+      6. Keywords:
+         - transparent: Fully see-through.
+         - currentColor: Refers to the value of the 'color' property of the element.
+      */
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 40px;
+        background-color: #f8f9fa;
+        line-height: 1.6;
+      }
+
+      .color-card {
+        display: inline-block;
+        width: 250px;
+        margin: 15px;
+        padding: 15px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+        vertical-align: top;
+      }
+
+      .swatch {
+        height: 120px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid rgba(0,0,0,0.05);
+      }
+
+      /* Color Examples */
+      .named { background-color: tomato; }
+      .hex { background-color: #3498db; }
+      .hex-alpha { background-color: #3498db80; }
+      .rgb { background-color: rgb(46, 204, 113); }
+      .hsl { background-color: hsl(280, 70%, 60%); }
+      .oklch { background-color: oklch(0.7 0.2 150); }
+
+      h1 { color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+      code { background: #eee; padding: 2px 5px; border-radius: 4px; }
+    </style>
+<body>
+    <h1>CSS Color Formats & Systems</h1>
+    <p>CSS offers multiple ways to define colors. Below is a breakdown of the most common systems.</p>
+
+    <div class="color-card">
+        <div class="swatch named"></div>
+        <strong>Named Color</strong><br>
+        <code>tomato</code>
+    </div>
+
+    <div class="color-card">
+        <div class="swatch hex"></div>
+        <strong>Hexadecimal</strong><br>
+        <code>#3498db</code>
+    </div>
+
+    <div class="color-card">
+        <div class="swatch hex-alpha"></div>
+        <strong>Hex with Alpha</strong><br>
+        <code>#3498db80</code> (50%)
+    </div>
+
+    <div class="color-card">
+        <div class="swatch rgb"></div>
+        <strong>RGB</strong><br>
+        <code>rgb(46, 204, 113)</code>
+    </div>
+
+    <div class="color-card">
+        <div class="swatch hsl"></div>
+        <strong>HSL</strong><br>
+        <code>hsl(280, 70%, 60%)</code>
+    </div>
+
+    <div class="color-card">
+        <div class="swatch oklch"></div>
+        <strong>OKLCH (Modern)</strong><br>
+        <code>oklch(0.7 0.2 150)</code>
+    </div>
+
+    <hr style="margin-top: 40px; border: 0; border-top: 1px solid #ddd;">
+    <h3>Which one should you use?</h3>
+    <ul>
+        <li><b>Hex</b> is the industry standard for web colors.</li>
+        <li><b>RGB/RGBA</b> is great for simple transparency.</li>
+        <li><b>HSL</b> is best for creating color palettes (it's easy to adjust brightness or saturation).</li>
+        <li><b>OKLCH</b> is the future—it ensures colors look consistent across different brightness levels.</li>
+    </ul>
+</body>
+</html>

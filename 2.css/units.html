@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+      IN-DEPTH CSS UNITS & RESOLUTION NOTES:
+
+      1. Absolute Units (Fixed):
+         - px (Pixels): The basic unit of CSS. 1px is defined as 1/96th of 1 inch. On high-res screens, 1 CSS pixel may consist of multiple physical pixels (Device Pixel Ratio).
+         - pt (Points): Primarily for print (1/72 of an inch).
+         - pc (Picas): 12 points.
+         - cm, mm, in: Physical units. Use with caution as they depend on the device reporting its physical size correctly.
+
+      2. Relative Units (Dynamic):
+         - % (Percentage): Relative to the parent element's corresponding property.
+         - em: Relative to the font-size of the element itself. If used on font-size, it's relative to the parent's font-size. **CRITICAL**: em units compound (nested ems multiply).
+         - rem (Root em): Relative to the font-size of the <html> element. Avoids the compounding problem of em. Best for consistent scaling.
+         - ch: Relative to the width of the "0" (zero) character.
+         - ex: Relative to the x-height of the current font.
+
+      3. Viewport Units (Screen-based):
+         - vw/vh: 1% of the viewport width/height.
+         - vmin/vmax: 1% of the viewport's smaller/larger dimension.
+         - Modern Viewport Units (Mobile fixes):
+            - svh/svw (Small): Viewport size with UI elements (like address bar) visible.
+            - lvh/lvw (Large): Viewport size with UI elements hidden.
+            - dvh/dvw (Dynamic): Automatically adjusts as UI elements appear/disappear.
+
+      4. PPI vs DPI vs DPR:
+         - PPI (Pixels Per Inch): Pixel density of a digital display. Higher PPI means smaller, sharper pixels.
+         - DPI (Dots Per Inch): Printing term for how many ink dots are in an inch. Often used interchangeably with PPI in digital contexts, but technically different.
+         - DPR (Device Pixel Ratio): The ratio between physical pixels and CSS pixels. A "Retina" display might have a DPR of 2.0 or 3.0, meaning 1 CSS pixel is actually a 2x2 or 3x3 grid of physical pixels.
+
+      5. CSS Functions for Units:
+         - calc(): Allows mathematical expressions (e.g., width: calc(100% - 20px)).
+         - clamp(min, preferred, max): Best for fluid typography (e.g., font-size: clamp(1rem, 5vw, 2rem)).
+         - min() / max(): Selects the smallest/largest value from a list.
+    */
+
+      html {
+        font-size: 16px; /* Standard root font size */
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+
+      .px-demo {
+        width: 200px;
+        height: 100px;
+        background-color: #3498db;
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .percent-demo {
+        width: 50%; /* Half of parent */
+        height: 50px;
+        background-color: #e67e22;
+        color: white;
+        margin-bottom: 10px;
+      }
+
+      .rem-demo {
+        font-size: 2rem; /* 2 * 16px = 32px */
+        background-color: #2ecc71;
+        padding: 10px;
+      }
+
+      .viewport-demo {
+        width: 20vw;
+        height: 10vh;
+        background-color: #9b59b6;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        border: 2px solid #ccc;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      /* Em Compounding Demo */
+      .em-parent {
+        font-size: 1.5em;
+        background: #ecf0f1;
+        padding: 10px;
+      }
+      .em-child {
+        font-size: 1.5em;
+        background: #bdc3c7;
+        padding: 10px;
+      }
+
+      /* Calculation & Clamp Demo */
+      .calc-demo {
+        width: calc(100% - 100px);
+        background: #f1c40f;
+        padding: 10px;
+        margin: 10px 0;
+      }
+
+      .clamp-demo {
+        font-size: clamp(1rem, 4vw, 2.5rem);
+        background: #e74c3c;
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Units & Resolution</h1>
+
+    <h3>1. Absolute Unit (px)</h3>
+    <div class="px-demo">200px Wide</div>
+
+    <h3>2. Relative Unit (Percentage)</h3>
+    <div class="container">
+      <div class="percent-demo">50% of Parent</div>
+    </div>
+
+    <h3>3. Root Relative Unit (rem)</h3>
+    <div class="rem-demo">2rem (32px if root is 16px)</div>
+
+    <h3>4. Viewport Units (vw/vh)</h3>
+    <div class="viewport-demo">20vw x 10vh</div>
+
+    <h3>5. Em Compounding (The multiplier effect)</h3>
+    <div class="em-parent">
+      Parent (1.5em of body)
+      <div class="em-child">Child (1.5em of parent = 2.25em of body)</div>
+    </div>
+
+    <h3>6. Mathematical Sizing (calc)</h3>
+    <div class="calc-demo">Width: calc(100% - 100px)</div>
+
+    <h3>7. Fluid Typography (clamp)</h3>
+    <div class="clamp-demo">Resize browser to see me scale fluidly!</div>
+
+    <hr />
+    <h3>PPI vs DPI vs DPR Summary</h3>
+    <p>
+      <b>PPI:</b> Screen density. <br />
+      <b>DPI:</b> Printer density. <br />
+      <b>DPR:</b> Physical pixels per CSS pixel (Retina = 2.0+).
+    </p>
+    <p>
+      Check the source code comments for the full in-depth breakdown of all CSS
+      units.
+    </p>
+  </body>
+</html>

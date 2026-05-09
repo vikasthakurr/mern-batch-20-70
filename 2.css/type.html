@@ -16,14 +16,44 @@
   <body>
     <h1>Vikas</h1>
     <!--
-      Notes on CSS:
-      - CSS stands for Cascading Style Sheets.
-      - It is used to control the appearance and layout of HTML elements on a web page.
-      - There are three main types of CSS:
-        1. Inline CSS: styles are written directly in the HTML element using the style attribute.
-        2. Internal CSS: styles are written inside a <style> block in the HTML document head.
-        3. External CSS: styles are written in a separate .css file and linked to the HTML page with <link>.
-      - Cascading means that when multiple CSS rules apply to the same element, the browser chooses which styles to use based on rule order, specificity, and source.
+      ==========================================================================
+      CSS FUNDAMENTALS & HISTORY NOTES
+      ==========================================================================
+
+      1. WHAT IS CSS?
+         - CSS stands for Cascading Style Sheets.
+         - It separates content (HTML) from presentation (CSS).
+      
+      2. BRIEF HISTORY:
+         - 1994: Proposed by Håkon Wium Lie while working at CERN.
+         - 1996: CSS Level 1 becomes an official W3C recommendation.
+         - 1998: CSS Level 2 is released (added absolute positioning, z-index, etc.).
+         - 1999-Present: CSS Level 3 and beyond. Instead of a single large spec, CSS was split into "Modules" (Selectors, Colors, Flexbox) that evolve independently.
+
+      3. THE THREE TYPES OF CSS:
+         
+         A. INLINE CSS:
+            - Written directly in the 'style' attribute of an HTML tag.
+            - Example: <h1 style="color: blue;">Hello</h1>
+            - PRO: Quickest way to apply a style.
+            - CON: Hard to maintain, highest specificity, breaks separation of concerns.
+
+         B. INTERNAL (EMBEDDED) CSS:
+            - Written inside a <style> tag within the <head> section.
+            - PRO: Good for single-page websites; no extra HTTP request needed.
+            - CON: Styles cannot be reused across multiple pages.
+
+         C. EXTERNAL CSS:
+            - Written in a separate .css file and linked via <link rel="stylesheet">.
+            - PRO: Best practice! Styles can be reused across thousands of pages. Browsers cache the file for faster loading.
+            - CON: Requires an additional HTTP request (though minimal impact with modern protocols).
+
+      4. WHY "CASCADING"?
+         - The "Cascade" refers to the algorithm that decides which style rule wins when multiple rules apply to the same element.
+         - It considers:
+           1. Importance (!important)
+           2. Specificity (Inline > ID > Class > Element)
+           3. Source Order (Last rule declared wins)
     -->
   </body>
   <script></script>

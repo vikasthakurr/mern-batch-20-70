@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+      CSS Selectors Notes:
+      1. Universal Selector (*): Selects all elements on the page.
+      2. Element (Tag) Selector: Selects all elements of a specific tag type (e.g., h1, p, div).
+      3. Class Selector (.className): Selects all elements with a specific class attribute.
+      4. ID Selector (#idName): Selects a single element with a specific unique id attribute.
+      5. Grouping Selector (h1, p): Selects multiple selectors to apply the same styles.
+      
+      Combinators:
+      - Descendant Selector (space): Selects elements inside another element (e.g., div p).
+      - Child Selector (>): Selects elements that are a direct child of another element (e.g., div > p).
+      - Adjacent Sibling Selector (+): Selects an element that is directly after another specific element (e.g., h1 + p).
+      - General Sibling Selector (~): Selects all elements that are siblings after another element (e.g., h1 ~ p).
+      
+      Attribute Selectors:
+      - [attribute]: Selects elements with a specific attribute.
+      - [attribute="value"]: Selects elements with a specific attribute and value.
+      
+      Pseudo-classes (:): Selects elements based on their state (e.g., :hover, :active, :focus, :nth-child()).
+      Pseudo-elements (::): Selects and styles a specific part of an element (e.g., ::before, ::after, ::first-line, ::placeholder).
+      */
+
+      /* Universal Selector Example */
+      /* * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      } */
+
+      /* ID Selector Example */
+      #first {
+        color: #2c3e50;
+      }
+
+      /* Class Selector Example */
+      .mern {
+        color: #100c24;
+        font-style: italic;
+        font-weight: bold;
+      }
+
+      /* Attribute Selector Example */
+      input[type="text"] {
+        border: 2px solid #3498db;
+        padding: 5px;
+      }
+
+      /* Pseudo-element Examples */
+      input::placeholder {
+        color: #95a5a6;
+        font-style: italic;
+      }
+
+      #first::before {
+        content: "👋 ";
+      }
+
+      #first::after {
+        content: " (SDE)";
+        font-size: 0.6em;
+        color: #7f8c8d;
+      }
+
+      /* Pseudo-class Example */
+      #first:hover {
+        color: #e74c3c;
+        cursor: pointer;
+      }
+
+      /* Nth-child Selector Example */
+      div p:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      div p:first-child {
+        color: #27ae60;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="first">Vikas Thakur</h1>
+    <h3 class="mern">CSS Selectors Showcase</h3>
+    <p class="mern">This is a paragraph with the 'mern' class.</p>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" placeholder="Enter your name" />
+
+    <hr />
+
+    <h3>Nth-child and Combinator Examples:</h3>
+    <p>Outside items:</p>
+    <p class="mern">item-1 (mern class)</p>
+    <p class="mern">item-2 (mern class)</p>
+    <p class="mern">item-3 (mern class)</p>
+    <p>item-4</p>
+    <p>item-5</p>
+
+    <div class="container">
+      <p>Inside Div item-1 (first-child)</p>
+      <p>Inside Div item-2 (even)</p>
+      <p>Inside Div item-3 (odd)</p>
+      <p>Inside Div item-4 (even)</p>
+    </div>
+  </body>
+</html>
