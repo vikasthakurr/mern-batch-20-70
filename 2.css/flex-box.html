@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+      CSS FLEXBOX NOTES:
+      Flexbox is a one-dimensional layout method for arranging items in rows or columns.
+      It consists of a 'Flex Container' (parent) and 'Flex Items' (children).
+
+      AXIS SYSTEM DIAGRAM (row):
+      ----------------------------------------->  MAIN AXIS (justify-content)
+      |  
+      |  CROSS AXIS (align-items)
+      |
+      v
+
+      AXIS SYSTEM DIAGRAM (column):
+      ----------------------------------------->  CROSS AXIS (align-items)
+      |  
+      |  MAIN AXIS (justify-content)
+      |
+      v
+      
+      I. FLEX CONTAINER PROPERTIES (Parent):
+      1. display: flex; -> Activates flexbox.
+      2. flex-direction: row | row-reverse | column | column-reverse;
+      3. flex-wrap: nowrap | wrap | wrap-reverse; -> Should items wrap if no space?
+      4. flex-flow: <direction> <wrap>; (Shorthand)
+      5. justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly; 
+         -> Aligns items along the MAIN axis.
+      6. align-items: stretch | flex-start | flex-end | center | baseline;
+         -> Aligns items along the CROSS axis.
+      7. align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+         -> Aligns lines within a flex container when there is extra space in the cross-axis.
+      8. gap: <px>; -> Defines space between items.
+
+      II. FLEX ITEM PROPERTIES (Children):
+      1. order: <number>; -> Changes the order of an item (default is 0).
+      2. flex-grow: <number>; -> Ability for an item to grow if necessary (default 0).
+      3. flex-shrink: <number>; -> Ability for an item to shrink if necessary (default 1).
+      4. flex-basis: <length> | auto; -> Default size of an element before remaining space is distributed.
+      5. flex: <grow> <shrink> <basis>; (Shorthand)
+      6. align-self: auto | flex-start | flex-end | center | baseline | stretch;
+         -> Overrides 'align-items' for a specific child.
+
+      DOs & DON'Ts:
+      ✅ DO: Use Flexbox for small-scale layouts (navbars, centering, sidebars).
+      ✅ DO: Use 'gap' instead of margins for spacing between items when possible.
+      ✅ DO: Use 'justify-content: center' and 'align-items: center' for perfect centering.
+      ❌ DON'T: Use Flexbox for complex 2D layouts (prefer CSS Grid for that).
+      ❌ DON'T: Overuse 'flex: grow' without understanding how it distributes space.
+      */
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fafafa;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .axis-diagram {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 2px dashed #3498db;
+        border-radius: 12px;
+        background: white;
+        position: relative;
+        height: 160px;
+      }
+
+      .axis-line {
+        position: absolute;
+        background: #e74c3c;
+      }
+
+      .axis-main {
+        top: 40px;
+        left: 20px;
+        width: 80%;
+        height: 2px;
+      }
+
+      .axis-main::after {
+        content: 'MAIN AXIS (justify-content)';
+        position: absolute;
+        right: -10px;
+        top: -20px;
+        font-size: 0.8rem;
+        color: #e74c3c;
+        font-weight: bold;
+      }
+
+      .axis-cross {
+        top: 40px;
+        left: 20px;
+        width: 2px;
+        height: 100px;
+      }
+
+      .axis-cross::after {
+        content: 'CROSS AXIS (align-items)';
+        position: absolute;
+        left: 10px;
+        bottom: -10px;
+        font-size: 0.8rem;
+        color: #e74c3c;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+
+      .container {
+        width: 100%;
+        height: 400px;
+        background-color: #f0f0e0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+      }
+
+      .child {
+        width: 100px;
+        height: 100px;
+        background-color: #3498db;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+
+      .child-2 {
+        background-color: #e74c3c;
+        order: -1;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; padding-top: 20px;">CSS Flexbox Master Guide</h1>
+    
+    <div class="axis-diagram">
+      <div class="axis-line axis-main"></div>
+      <div class="axis-line axis-cross"></div>
+      <p style="margin-top: 120px; text-align: center; font-style: italic;">
+        The layout behavior changes based on which axis is the "Main" axis.
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="child child-1">1</div>
+      <div class="child child-2">2</div>
+      <div class="child child-3">3</div>
+    </div>
+  </body>
+</html>

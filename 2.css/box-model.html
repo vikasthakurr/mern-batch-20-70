@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+      CSS BOX MODEL NOTES:
+      Every element in web design is considered a rectangular box. 
+      The CSS box model consists of several layers:
+
+      1. Content: The actual content of the element (text, images, etc.) where its width and height are applied.
+      2. Padding: The space between the content and the border. It is transparent and inside the element.
+      3. Border: A line that surrounds the padding and content.
+      4. Margin: The outermost layer. It is the space between the border and the next element. It is transparent and outside the element.
+
+      BOX SIZING PROPERTY:
+      - content-box (default): width and height only include the content. 
+        Total Width = width + padding + border.
+      - border-box: width and height include content, padding, and border.
+        Total Width = specified width (padding and border are absorbed inside).
+
+      DOs & DON'Ts:
+      ✅ DO: Use 'box-sizing: border-box' globally for predictable layouts.
+      ✅ DO: Use 'margin' to create space BETWEEN elements.
+      ✅ DO: Use 'padding' to create space INSIDE elements (around content).
+      ❌ DON'T: Use fixed pixel widths for responsive layouts (prefer % or max-width).
+      ❌ DON'T: Confuse 'padding' with 'margin'—padding affects the element's size/background.
+      ❌ DON'T: Rely on vertical margins for precise spacing (beware of margin collapse).
+      */
+
+      * {
+        margin: 0;
+        padding: 0;
+        /* box-sizing: border-box; /* Highly recommended for easier layout calculations */
+      }
+      .container {
+        width: 500px;
+        height: 500px;
+        background-color: beige;
+      }
+      .child {
+        background-color: red;
+        width: 200px; /* Content Width */
+        height: 200px; /* Content Height */
+        padding: 100px; /* Space inside the box */
+        border: 2px solid black; /* Line around padding */
+        margin: 10px; /* Space outside the box */
+        
+        /* 
+        With default content-box:
+        Actual Width = 200 (width) + 100+100 (padding) + 2+2 (border) = 404px
+        Actual Height = 200 (height) + 100+100 (padding) + 2+2 (border) = 404px
+        */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="child">hi</div>
+    </div>
+  </body>
+</html>

@@ -3,3 +3,5 @@ Notes-link:https://docs.google.com/spreadsheets/d/1it14n-2BTLIOlre4eO6EWZF5WoMYc
 ARIA:https://www.w3.org/WAI/standards-guidelines/aria/
 
 PPI vs DPI:https://www.geeksforgeeks.org/computer-graphics/difference-between-ppi-and-dpi/
+
+filter:https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/filter
