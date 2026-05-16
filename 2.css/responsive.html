@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="pre-connect" href="127.356789.">
+    <style>
+      /* 
+        RESPONSIVE WEB DESIGN (RWD)
+        - RWD is an approach to web design that makes web pages render well on a variety of devices and window or screen sizes.
+        
+        1. THE VIEWPORT META TAG:
+           - <meta name="viewport" content="width=device-width, initial-scale=1.0">
+           - This is CRUCIAL for responsive design. It tells the browser how to control the page's dimensions and scaling.
+        
+        2. MEDIA QUERIES (@media):
+           - Media queries allow you to apply different styles for different media types or device characteristics (like screen width).
+           - Common features: width, height, device-width, orientation, resolution.
+        
+        3. BREAKPOINTS:
+           - Points where the website content will respond to provide the user with the best possible layout.
+           - Example Breakpoints:
+             - Extra small (Mobile): < 576px
+             - Small (Tablet): 576px - 768px
+             - Medium (Laptop): 768px - 992px
+             - Large (Desktop): 992px - 1200px
+        
+        4. STRATEGIES:
+           - Mobile First: Design for the smallest screen first and use min-width for larger screens.
+           - Desktop First: Design for the largest screen first and use max-width for smaller screens.
+      */
+
+      .container {
+        width: 100vw;
+        height: 100vh;
+        border: 1px dotted black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container img {
+        width: 80%; /* Responsive width */
+        max-width: 400px;
+        height: auto; /* Maintain aspect ratio */
+      }
+
+      /* Example of a Media Query for small screens (Mobile) */
+      @media screen and (max-width: 600px) {
+        .container {
+          background-color: lightblue;
+        }
+        .container img {
+          border: 5px solid red;
+        }
+      }
+
+      /* Example for Landscape orientation */
+      @media (orientation: landscape) {
+        img {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img
+        src="https://images.pexels.com/photos/8650941/pexels-photo-8650941.jpeg"
+        alt=""
+      />
+    </div>
+  </body>
+</html>

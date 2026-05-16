@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+        CSS ANIMATIONS
+        - CSS animations make it possible to animate transitions from one CSS style configuration to another.
+        - Two main components:
+          1. @keyframes: Defines the stages and styles of the animation.
+          2. Animation Properties: Assigned to the element you want to animate.
+
+        1. @keyframes RULE:
+           - Used to define the animation sequence.
+           - Use percentage (0% to 100%) or "from" and "to" keywords.
+           - Example: 
+             @keyframes myAnimation {
+               0% { opacity: 0; }
+               100% { opacity: 1; }
+             }
+
+        2. ANIMATION PROPERTIES:
+           - animation-name: The name of the @keyframes to use.
+           - animation-duration: How long the animation takes (e.g., 2s, 500ms).
+           - animation-delay: When the animation should start.
+           - animation-iteration-count: How many times to repeat (number or 'infinite').
+           - animation-timing-function: The speed curve (linear, ease, ease-in, ease-out, cubic-bezier).
+           - animation-direction: (normal, reverse, alternate, alternate-reverse).
+           - animation-fill-mode: (none, forwards, backwards, both).
+
+        3. SHORTHAND:
+           - animation: [name] [duration] [timing-function] [delay] [iteration-count] [direction] [fill-mode];
+      */
+
+      .ground {
+        width: 700px;
+        height: 600px;
+        background-color: green;
+        display: flex;
+        justify-content: center;
+        align-items: end;
+      }
+      .ball {
+        width: 100px;
+        height: 100px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* Using individual properties */
+        animation-name: jump;
+        animation-duration: 2s; /* Changed from 5s to 2s for better visual */
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+        
+        /* Using shorthand (uncomment to test) */
+        /* animation: jump 2s ease-in-out infinite; */
+      }
+
+      @keyframes jump {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          background-color: blue;
+          transform: translateY(-300px);
+        }
+        100% {
+          transform: translateY(0px);
+          background-color: yellow;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ground">
+      <div class="ball">GT vs KKR</div>
+    </div>
+  </body>
+</html>

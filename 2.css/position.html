@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* 
+        CSS POSITIONING
+        - The position property specifies the type of positioning method used for an element.
+        - There are five different position values:
+
+        1. STATIC (Default):
+           - Elements are positioned according to the normal flow of the page.
+           - top, bottom, left, right, and z-index properties have NO effect.
+
+        2. RELATIVE:
+           - Element is positioned relative to its NORMAL position.
+           - Setting top, right, bottom, and left will cause it to be adjusted away from its normal position.
+           - Other elements will NOT be adjusted to fill any gap left by the element.
+
+        3. ABSOLUTE:
+           - Element is positioned relative to its NEAREST POSITIONED ANCESTOR (instead of positioned relative to the viewport, like fixed).
+           - "Positioned" means an ancestor with a position other than static.
+           - If no positioned ancestor is found, it uses the document body.
+           - It is removed from the normal document flow (other elements ignore it).
+
+        4. FIXED:
+           - Element is positioned relative to the VIEWPORT (browser window).
+           - It stays in the same place even if the page is scrolled.
+           - Removed from the normal document flow.
+
+        5. STICKY:
+           - Element is positioned based on the user's scroll position.
+           - It toggles between relative and fixed, depending on the scroll position.
+           - Must have at least one of top, bottom, left, or right specified for it to work.
+      */
+
+      .container {
+        width: 800px;
+        height: 2000px; /* Reduced height for better scrolling demo */
+        background-color: beige;
+        position: relative; /* Acts as a reference for absolute children */
+      }
+      .child {
+        width: 150px;
+        height: 150px;
+        background-color: blue;
+        margin: 5px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .postion-1 {
+        background-color: #3498db;
+        position: static; /* Default behavior, top/left have no effect */
+        left: 70px; 
+      }
+      .postion-2 {
+        background-color: #e67e22;
+        position: relative; /* Relative to its own normal position */
+        left: 30%;
+      }
+      .postion-3 {
+        background-color: #2ecc71;
+        position: absolute; /* Relative to nearest positioned ancestor (container) */
+        top: 200px;
+        right: 0;
+      }
+      .postion-4 {
+        background-color: #e74c3c;
+        position: fixed; /* Relative to the browser viewport */
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .postion-5 {
+        background-color: #9b59b6;
+        position: sticky; /* Sticks to the top of the viewport when scrolling */
+        top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="child postion-1">position-1</div>
+      <div class="child postion-2">position-2</div>
+      <div class="child postion-3">position-3</div>
+      <div class="child postion-4">position-4</div>
+      <div class="child postion-5">position-5</div>
+    </div>
+  </body>
+</html>
