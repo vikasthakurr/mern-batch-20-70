@@ -52,9 +52,9 @@
 //         console.log("hi");
 //       }
 
-var print = function () {
-  console.log("hi");
-};
+// var print = function () {
+//   console.log("hi");
+// };
 
 // function a() {
 //   var a = 10;
@@ -69,20 +69,20 @@ var print = function () {
 // }
 // a();
 
-let name = "vikas";
-let a = 50;
-var a = 40;
+// let name = "vikas";
+// let a = 50;
+// var a = 40;
 
-function outer() {
-  let a = 10;
-  var a = 50;
-  console.log(a, b);
+// function outer() {
+//   let a = 10;
+//   var a = 50;
+//   console.log(a, b);
 
-  function inner() {
-    console.log(a, b, c);
-  }
-  let c = 10;
+//   function inner() {
+//     console.log(a, b, c);
+//   }
+//   let c = 10;
 
-  inner();
-}
-outer();
+//   inner();
+// }
+// outer();
