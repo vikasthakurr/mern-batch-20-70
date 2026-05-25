@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function outer() {
+        let balance = 10;
+
+        function inner() {
+          console.log(a);
+        }
+        return inner;
+      }
+      let result = outer();
+
+    //   console.log(balance);
+      // console.log(result);
+      result();
+    </script>
+  </body>
+</html>

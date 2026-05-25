@@ -1,29 +1,52 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <title>Memory Leak Demo</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
   </head>
   <body>
-    <h2>Memory Leak Example</h2>
-    <button id="start">Start Leak</button>
-    <button id="stop">Stop Leak</button>
+    <h1>abort controller panel</h1>
+
+    <button id="start">Start api Call</button>
+    <button id="stop">Stop api Call</button>
+
+    <p id="status"></p>
 
     <script>
-      let leakyArray = [];
-      let intervalId;
+      let controller;
+      let timeoutId;
 
       document.getElementById("start").addEventListener("click", () => {
-        intervalId = setInterval(() => {
-          // Keep pushing large data into the array
-          leakyArray.push(new Array(1000000).fill("leak!"));
+        controller = new AbortController();
 
-          console.log("Array size:", leakyArray.length);
-        }, 500);
+        const signal = controller.signal;
+        const status = document.getElementById("status");
+        status.textContent = "Fetching the data please wait....";
+
+        fetch("https://jsonplaceholder.typicode.com/todos/1", { signal })
+          .then((response) => response.json())
+          .then((data) => {
+            timeoutId = setTimeout(() => {
+              status.textContent = JSON.stringify(data, null, 2);
+            }, 5000);
+          })
+          .catch((err) => {
+            if (err.name == "AbortError") {
+              clearTimeout(timeoutId);
+              status.textContent = "fetch requested is  Aborted";
+            } else {
+              status.textContent = err.message;
+            }
+          });
       });
-
       document.getElementById("stop").addEventListener("click", () => {
-        clearInterval(intervalId);
-        console.log("Stopped leaking, but memory is still used.");
+        if (controller) {
+          controller.abort();
+        }
+        clearTimeout(timeoutId);
+        document.getElementById("status").textContent =
+          "fetch requested is  Aborted";
       });
     </script>
   </body>

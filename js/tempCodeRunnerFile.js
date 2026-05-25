@@ -1,4 +1,8 @@
-function sun() {
-//   console.log("hu");
+
+//   console.log(a);
 // }
-// sun();
+// function b() {
+//   console.log(a);
+// }
+
+{
