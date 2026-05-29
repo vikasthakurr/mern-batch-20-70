@@ -22,7 +22,7 @@
  *
  * **Temporal Dead Zone (TDZ)**
  *   - The period between entering the block scope and encountering the `let`/`const` declaration.
- *   - Variables are in an uninitialised state; any read/write results in a `ReferenceError`.
+ *   - Variables are in an uninitialized state; any read/write results in a `ReferenceError`.
  *   - Example:
  *     ```js
  *     console.log(a); // ReferenceError: Cannot access 'a' before initialization
