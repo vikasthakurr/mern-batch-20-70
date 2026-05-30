@@ -1,8 +1,2 @@
 
-//   console.log(a);
-// }
-// function b() {
-//   console.log(a);
-// }
-
-{
+let res = sum
