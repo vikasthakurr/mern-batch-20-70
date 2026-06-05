@@ -7,11 +7,88 @@
   </head>
   <body>
     <script>
+      // ============================================================
+      // ASYNC / AWAIT in JavaScript - Notes
+      // ============================================================
+
+      // 1. What is Async/Await?
+      // ---------------------------------------------------------
+      // - async/await is syntactic sugar over Promises.
+      // - It makes asynchronous code look and behave like synchronous code.
+      // - Introduced in ES2017 (ES8).
+
+      // 2. The "async" keyword
+      // ---------------------------------------------------------
+      // - Adding "async" before a function makes it ALWAYS return a Promise.
+      // - Even if you return a plain value, it gets wrapped in Promise.resolve().
+      //
+      // Example:
+      //   async function greet() { return "Hello"; }
+      //   greet().then(val => console.log(val)); // "Hello"
+
+      // 3. The "await" keyword
+      // ---------------------------------------------------------
+      // - "await" can ONLY be used inside an async function.
+      // - It pauses the execution of the async function until the Promise resolves.
+      // - It returns the resolved value of the Promise.
+      // - If the Promise rejects, it throws an error (use try/catch to handle).
+
+      // 4. How it works behind the scenes
+      // ---------------------------------------------------------
+      // - When JS encounters "await", it:
+      //     a) Pauses the async function execution.
+      //     b) Returns control to the caller (the rest of the code outside continues).
+      //     c) Once the awaited Promise resolves, it resumes the function.
+      // - The event loop and microtask queue handle the scheduling.
+
+      // 5. Error Handling with try/catch
+      // ---------------------------------------------------------
+      // async function getData() {
+      //   try {
+      //     const res = await fetch("https://some-api.com/data");
+      //     const data = await res.json();
+      //     console.log(data);
+      //   } catch (error) {
+      //     console.log("Something went wrong:", error.message);
+      //   }
+      // }
+
+      // 6. Async/Await vs Promises (.then/.catch)
+      // ---------------------------------------------------------
+      // Promise way:
+      //   fetch(url)
+      //     .then(res => res.json())
+      //     .then(data => console.log(data))
+      //     .catch(err => console.log(err));
+      //
+      // Async/Await way (cleaner, easier to read):
+      //   const res = await fetch(url);
+      //   const data = await res.json();
+      //   console.log(data);
+
+      // 7. Key Rules
+      // ---------------------------------------------------------
+      // - "await" only works inside "async" functions.
+      // - An async function always returns a Promise.
+      // - Multiple awaits run SEQUENTIALLY (one after another).
+      // - For parallel execution, use Promise.all():
+      //     const [users, posts] = await Promise.all([fetchUsers(), fetchPosts()]);
+
+      // ============================================================
+      // PRACTICAL EXAMPLE
+      // ============================================================
+
       async function fetchMango() {
         const mango = await fetch("https://dummyjson.com/products");
+        // Step 1: fetch() returns a Promise that resolves to a Response object.
+        // "await" pauses here until the network request completes.
+
         const jsondata = await mango.json();
+        // Step 2: .json() also returns a Promise (parsing the body takes time).
+        // "await" pauses here until the JSON parsing is done.
+
         console.log(jsondata);
-        //   console.log(mango);
+        // Step 3: Now we have the actual JavaScript object to work with.
       }
 
       fetchMango();
