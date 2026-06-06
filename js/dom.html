@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .vikas {
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>this is heading</h1>
+    <h1 id="heading-1">this is heading with id</h1>
+    <p class="para">this is para</p>
+    <p class="para">this is para2</p>
+
+    <div class="container">
+      <p>item-1</p>
+      <p>item-2</p>
+      <p>item-3</p>
+      <p>item-4</p>
+    </div>
+    <h3>vikas</h3>
+    <!-- <img src="" alt=""> -->
+
+    <!--
+    ============================================
+    DOM (Document Object Model) - Notes
+    ============================================
+
+    ** Definition **
+    - DOM is a programming interface for HTML documents.
+    - It represents the page as a tree of objects (nodes).
+    - JavaScript can use the DOM to read, change, add, or delete HTML elements.
+    - When a browser loads a page, it creates a DOM tree of that document.
+
+    ============================================
+    SELECTING ELEMENTS (DOM Methods)
+    ============================================
+
+    1. document.getElementById("id")
+       - Returns a single element with the matching id.
+       - Example: document.getElementById("heading-1")
+
+    2. document.getElementsByClassName("class")
+       - Returns an HTMLCollection of all elements with that class.
+       - Example: document.getElementsByClassName("para")
+
+    3. document.getElementsByTagName("tag")
+       - Returns an HTMLCollection of all elements with that tag name.
+       - Example: document.getElementsByTagName("p")
+
+    4. document.querySelector("selector")
+       - Returns the FIRST element that matches the CSS selector.
+       - Example: document.querySelector(".container p")
+
+    5. document.querySelectorAll("selector")
+       - Returns a NodeList of ALL elements matching the CSS selector.
+       - Example: document.querySelectorAll(".para")
+
+    ============================================
+    CREATING & ADDING ELEMENTS
+    ============================================
+
+    1. document.createElement("tag")
+       - Creates a new HTML element.
+       - Example: const div = document.createElement("div")
+
+    2. parent.appendChild(child)
+       - Adds a child element at the end of a parent.
+       - Example: document.body.appendChild(div)
+
+    3. parent.insertBefore(newNode, referenceNode)
+       - Inserts a new node before a reference node.
+
+    4. parent.append(child1, child2, ...)
+       - Appends multiple children or text at the end. (newer method)
+
+    5. parent.prepend(child)
+       - Inserts a child at the beginning of the parent.
+
+    6. element.insertAdjacentHTML("position", htmlString)
+       - Positions: "beforebegin", "afterbegin", "beforeend", "afterend"
+
+    ============================================
+    REMOVING ELEMENTS
+    ============================================
+
+    1. parent.removeChild(child)
+       - Removes a child element from the parent.
+
+    2. element.remove()
+       - Removes the element itself from the DOM. (newer method)
+
+    ============================================
+    MODIFYING CONTENT
+    ============================================
+
+    1. element.innerText
+       - Gets/sets the visible text of an element.
+
+    2. element.textContent
+       - Gets/sets all text (including hidden text).
+
+    3. element.innerHTML
+       - Gets/sets the HTML content inside an element.
+       - Example: element.innerHTML = "<b>Bold Text</b>"
+
+    ============================================
+    MODIFYING ATTRIBUTES
+    ============================================
+
+    1. element.setAttribute("attr", "value")
+       - Sets an attribute on the element.
+       - Example: img.setAttribute("src", "image.jpg")
+
+    2. element.getAttribute("attr")
+       - Returns the value of an attribute.
+
+    3. element.removeAttribute("attr")
+       - Removes an attribute from the element.
+
+    4. element.id / element.src / element.href
+       - Direct property access to common attributes.
+
+    ============================================
+    MODIFYING STYLES
+    ============================================
+
+    1. element.style.property = "value"
+       - Sets inline CSS styles.
+       - Example: element.style.backgroundColor = "red"
+       - Note: CSS property names become camelCase in JS
+         (background-color → backgroundColor)
+
+    2. element.classList.add("class")
+       - Adds a class to the element.
+
+    3. element.classList.remove("class")
+       - Removes a class from the element.
+
+    4. element.classList.toggle("class")
+       - Adds class if not present, removes if present.
+
+    5. element.classList.contains("class")
+       - Returns true/false if class exists.
+
+    ============================================
+    DOM TRAVERSAL (Navigating the Tree)
+    ============================================
+
+    1. element.parentElement
+       - Returns the parent element.
+
+    2. element.children
+       - Returns HTMLCollection of child elements.
+
+    3. element.firstElementChild
+       - Returns first child element.
+
+    4. element.lastElementChild
+       - Returns last child element.
+
+    5. element.nextElementSibling
+       - Returns next sibling element.
+
+    6. element.previousElementSibling
+       - Returns previous sibling element.
+
+    ============================================
+    EVENT HANDLING
+    ============================================
+
+    1. element.addEventListener("event", callback)
+       - Attaches an event listener.
+       - Example: btn.addEventListener("click", function() { ... })
+
+    2. element.removeEventListener("event", callback)
+       - Removes an event listener.
+
+    Common Events:
+       - click, dblclick, mouseover, mouseout
+       - keydown, keyup, keypress
+       - submit, change, input, focus, blur
+       - load, DOMContentLoaded, scroll, resize
+
+    ============================================
+    -->
+
+    <script>
+      //   let container = document.querySelector(".container");
+      //   console.log(container);
+      //   console.log(container.nextElementSibling);
+      //   const heading = document.createElement("h4");
+      //   heading.innerText = "this is h4 pushed using js";
+      //   document.body.appendChild(heading);
+      const img = document.createElement("img");
+      img.setAttribute(
+        "src",
+        "https://images.pexels.com/photos/15228018/pexels-photo-15228018.jpeg",
+      );
+      img.setAttribute("alt", "this is a image of vikas");
+      img.classList.add("vikas");
+      img.classList.remove("vikas");
+
+      document.body.appendChild(img);
+
+      console.log(img);
+    </script>
+  </body>
+</html>
