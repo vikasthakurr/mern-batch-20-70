@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .square {
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        display: inline-block;
+      }
+      .circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin: 10px;
+        display: inline-block;
+      }
+      .rectangle {
+        width: 200px;
+        height: 100px;
+        margin: 10px;
+        display: inline-block;
+      }
+      .container {
+        width: 800px;
+        height: 700px;
+        background-color: beige;
+      }
+    </style>
+  </head>
+  <body>
+    <input
+      type="text"
+      name=""
+      id="shapeNumber"
+      placeholder="enter the number"
+    />
+    <input type="text" id="shapeName" placeholder="enter shape name" />
+    <input type="color" name="" id="shapeColor" />
+    <button id="btn">Generate</button>
+    <div class="container"></div>
+
+    <script>
+      const btn = document.querySelector("#btn");
+      btn.addEventListener("click", (e) => {
+        document.querySelector(".container").innerHTML = "";
+        const shapeNumber = document.querySelector("#shapeNumber").value;
+        const shapeName = document.querySelector("#shapeName").value;
+        const shapeColor = document.querySelector("#shapeColor").value;
+        // console.log(shapeNumber, shapeName, shapeColor);
+        for (let i = 0; i < shapeNumber; i++) {
+          const ele = document.createElement("div");
+          ele.classList.add(shapeName);
+          ele.style.backgroundColor = shapeColor;
+
+          document.querySelector(".container").appendChild(ele);
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input
+      type="text"
+      name=""
+      id="userid"
+      placeholder="enter your github username"
+    />
+    <button id="btn">finduser</button>
+    <script>
+      const btn = document.querySelector("#btn");
+      btn.addEventListener("click", (e) => {
+        // document.body.innerHTML = "";
+        const username = document.querySelector("#userid").value;
+        fetch(`https://api.github.com/users/${username}`)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            const dp = document.createElement("img");
+            dp.setAttribute("src", data.avatar_url);
+            const follower = document.createElement("h1");
+            follower.textContent = data.followers_url;
+            document.body.appendChild(follower);
+            document.body.appendChild(dp);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    </script>
+  </body>
+</html>

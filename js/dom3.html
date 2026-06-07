@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-color: red;
+        position: absolute;
+      }
+      .container {
+        width: 700px;
+        height: 600px;
+        background-color: beige;
+        /* position: relative; */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+    <script>
+      const container = document.querySelector(".container");
+      container.addEventListener("click", (e) => {
+        const color = ["red", "black", "blue", "green", "yellow", "orange"];
+        const randomIndex = color[Math.floor(Math.random() * color.length)];
+        console.log(randomIndex);
+        const ele = document.createElement("div");
+        ele.classList.add("circle");
+        ele.style.backgroundColor = randomIndex;
+        ele.style.top = e.clientY - 50 + "px";
+        ele.style.left = e.clientX - 50 + "px";
+        container.appendChild(ele);
+      });
+    </script>
+  </body>
+</html>
