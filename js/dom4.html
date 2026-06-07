@@ -3,34 +3,187 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>GitHub User Finder</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #0d1117, #161b22);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 40px 20px;
+        color: #c9d1d9;
+      }
+
+      h1.title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        color: #58a6ff;
+      }
+
+      .search-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 40px;
+      }
+
+      #userid {
+        padding: 12px 20px;
+        width: 320px;
+        border: 2px solid #30363d;
+        border-radius: 8px;
+        background: #0d1117;
+        color: #c9d1d9;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      #userid:focus {
+        border-color: #58a6ff;
+      }
+
+      #btn {
+        padding: 12px 24px;
+        background: #238636;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      #btn:hover {
+        background: #2ea043;
+      }
+
+      .card {
+        background: #21262d;
+        border: 1px solid #30363d;
+        border-radius: 16px;
+        padding: 30px;
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .card img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 4px solid #58a6ff;
+        margin-bottom: 20px;
+      }
+
+      .card h2 {
+        font-size: 1.5rem;
+        color: #f0f6fc;
+        margin-bottom: 8px;
+      }
+
+      .card p {
+        color: #8b949e;
+        margin-bottom: 6px;
+        font-size: 0.95rem;
+      }
+
+      .card .stats {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 16px;
+      }
+
+      .card .stats div {
+        text-align: center;
+      }
+
+      .card .stats div span {
+        display: block;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #58a6ff;
+      }
+
+      .card .stats div small {
+        color: #8b949e;
+        font-size: 0.8rem;
+      }
+
+      .error-msg {
+        color: #f85149;
+        font-size: 1.1rem;
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
-    <input
-      type="text"
-      name=""
-      id="userid"
-      placeholder="enter your github username"
-    />
-    <button id="btn">finduser</button>
+    <h1 class="title">GitHub User Finder</h1>
+    <div class="search-container">
+      <input
+        type="text"
+        name=""
+        id="userid"
+        placeholder="Enter GitHub username"
+      />
+      <button id="btn">Find User</button>
+    </div>
+    <div id="result"></div>
+    <canvas id="mernotes"></canvas>
+
     <script>
       const btn = document.querySelector("#btn");
+      const resultDiv = document.querySelector("#result");
+
       btn.addEventListener("click", (e) => {
-        // document.body.innerHTML = "";
-        const username = document.querySelector("#userid").value;
+        const username = document.querySelector("#userid").value.trim();
+        if (!username) return;
+
+        resultDiv.innerHTML = "";
+
         fetch(`https://api.github.com/users/${username}`)
-          .then((res) => res.json())
+          .then((res) => {
+            if (!res.ok) throw new Error("User not found");
+            return res.json();
+          })
           .then((data) => {
             console.log(data);
-            const dp = document.createElement("img");
-            dp.setAttribute("src", data.avatar_url);
-            const follower = document.createElement("h1");
-            follower.textContent = data.followers_url;
-            document.body.appendChild(follower);
-            document.body.appendChild(dp);
+            resultDiv.innerHTML = `
+              <div class="card">
+                <img src="${data.avatar_url}" alt="${data.login}" />
+                <h2>${data.name || data.login}</h2>
+                <p>@${data.login}</p>
+                <p>${data.bio || ""}</p>
+                <div class="stats">
+                  <div>
+                    <span>${data.followers}</span>
+                    <small>Followers</small>
+                  </div>
+                  <div>
+                    <span>${data.following}</span>
+                    <small>Following</small>
+                  </div>
+                  <div>
+                    <span>${data.public_repos}</span>
+                    <small>Repos</small>
+                  </div>
+                </div>
+              </div>
+            `;
           })
           .catch((err) => {
             console.log(err);
+            resultDiv.innerHTML = `<p class="error-msg">User not found. Try again!</p>`;
           });
       });
     </script>
