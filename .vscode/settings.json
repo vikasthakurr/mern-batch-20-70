@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["etawah", "sachin", "wrongpassword"]
+  "cSpell.words": ["etawah", "sachin", "wrongpassword"],
+  "javascript.autoClosingTags": false
 }
