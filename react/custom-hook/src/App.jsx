@@ -1,11 +1,11 @@
-import "./App.css";
+// import "./App.css";
+import Usecustom from "./Usecustom";
 
 const App = () => {
-  return (
-    <div>
-      <h1>Custom Hooks</h1>
-    </div>
-  );
+  const [data] = Usecustom("https://dummyjson.com/products");
+  console.log(data);
+
+  return <div></div>;
 };
 
 export default App;
