@@ -1,11 +1,9 @@
-import "./App.css";
+import React from 'react'
 
 const App = () => {
   return (
-    <div>
-      <h1>Lazy Loading</h1>
-    </div>
-  );
-};
+    <div>App</div>
+  )
+}
 
-export default App;
+export default App
