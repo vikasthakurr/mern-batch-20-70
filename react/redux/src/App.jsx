@@ -1,9 +1,12 @@
+import AddTodo from "./AddTodo";
 import "./App.css";
+import ViewTodo from "./ViewTodo";
 
 const App = () => {
   return (
     <div>
-      <h1>Redux</h1>
+      <AddTodo />
+      <ViewTodo />
     </div>
   );
 };
