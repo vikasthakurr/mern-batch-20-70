@@ -5,5 +5,5 @@
 //   console.log("file done", data);
 // });
 // console.log("bye");
-import os from "os"
-console.log(os.cpus().length)
+// import os from "os"
+// console.log(os.cpus().length)
