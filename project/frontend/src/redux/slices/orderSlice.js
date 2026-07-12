@@ -1,5 +1,19 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../api/axios.js";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import api from "../../api/axios";
+
+export const fetchMyOrders = createAsyncThunk(
+  "orders/fetchMy",
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await api.get("/orders/my-orders");
+      return data.orders;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch orders",
+      );
+    }
+  },
+);
 
 export const placeOrder = createAsyncThunk(
   "orders/place",
@@ -9,7 +23,7 @@ export const placeOrder = createAsyncThunk(
       return data;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "error while placing the order",
+        err.response?.data?.message || "Failed to place order",
       );
     }
   },
@@ -23,8 +37,54 @@ export const cancelOrder = createAsyncThunk(
       return data.order;
     } catch (err) {
       return rejectWithValue(
-        err.response?.data?.message || "error while canceling the order",
+        err.response?.data?.message || "Failed to cancel order",
       );
     }
   },
 );
+
+const orderSlice = createSlice({
+  name: "orders",
+  initialState: {
+    orders: [],
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    clearOrderError(state) {
+      state.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchMyOrders.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchMyOrders.fulfilled, (state, action) => {
+        state.loading = false;
+        state.orders = action.payload;
+      })
+      .addCase(fetchMyOrders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(placeOrder.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(placeOrder.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(placeOrder.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(cancelOrder.fulfilled, (state, action) => {
+        const idx = state.orders.findIndex((o) => o._id === action.payload._id);
+        if (idx !== -1) state.orders[idx] = action.payload;
+      });
+  },
+});
+
+export const { clearOrderError } = orderSlice.actions;
+export default orderSlice.reducer;
