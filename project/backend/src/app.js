@@ -2,7 +2,13 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "../config/swagger.config.js";
+import adminRoute from "../routes/admin.route.js";
 import authRoute from "../routes/auth.route.js";
+import kitchenRoute from "../routes/kitchen.route.js";
+import menuRoute from "../routes/menu.route.js";
+import orderRoute from "../routes/order.route.js";
 
 const app = express();
 
@@ -21,10 +27,24 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "API is running" });
+  res.json({ message: "Cloud Kitchen API is running" });
 });
 
+// Swagger API Docs
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCss: ".swagger-ui .topbar { display: none }",
+    customSiteTitle: "Cloud Kitchen API Docs",
+  }),
+);
+
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/admin", adminRoute);
+app.use("/api/v1/kitchens", kitchenRoute);
+app.use("/api/v1/menu", menuRoute);
+app.use("/api/v1/orders", orderRoute);
 
 // 404 handler
 app.use((req, res) => {
@@ -34,8 +54,12 @@ app.use((req, res) => {
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(err.status || 500).json({
+
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({
+    success: false,
     message: err.message || "Internal Server Error",
+    errors: err.errors || [],
   });
 });
 

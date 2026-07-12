@@ -1,620 +1,463 @@
-import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Kitchen from "./models/kitchen.model.js";
 import Menu from "./models/menu.model.js";
-import Order from "./models/order.model.js";
 import User from "./models/user.model.js";
 
 dotenv.config();
 
-const seedData = async () => {
-  try {
-    await mongoose.connect(process.env.MONGO_URL);
-    console.log("Connected to MongoDB for seeding...");
+async function seedData() {
+  await mongoose.connect(process.env.MONGO_URL);
+  console.log("Connected to DB");
 
-    // Clear existing data
-    await User.deleteMany({});
-    await Kitchen.deleteMany({});
-    await Menu.deleteMany({});
-    await Order.deleteMany({});
-    console.log("Cleared existing data.");
-
-    // ========== USERS ==========
-    const hashedPassword = await bcrypt.hash("Password@123", 10);
-
-    const users = await User.insertMany([
-      {
-        username: "admin_vikas",
-        email: "admin@cloudkitchen.com",
-        password: hashedPassword,
-        role: "admin",
-        avatar: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/avatars/admin.png",
-        },
-      },
-      {
-        username: "chef_rahul",
-        email: "rahul@kitchen.com",
-        password: hashedPassword,
-        role: "admin",
-        avatar: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/avatars/chef1.png",
-        },
-      },
-      {
-        username: "chef_priya",
-        email: "priya@kitchen.com",
-        password: hashedPassword,
-        role: "admin",
-        avatar: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/avatars/chef2.png",
-        },
-      },
-      {
-        username: "customer_amit",
-        email: "amit@gmail.com",
-        password: hashedPassword,
-        role: "user",
-        avatar: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/avatars/user1.png",
-        },
-      },
-      {
-        username: "customer_neha",
-        email: "neha@gmail.com",
-        password: hashedPassword,
-        role: "user",
-        avatar: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/avatars/user2.png",
-        },
-      },
-      {
-        username: "customer_ravi",
-        email: "ravi@gmail.com",
-        password: hashedPassword,
-        role: "user",
-        avatar: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/avatars/user3.png",
-        },
-      },
-    ]);
-
-    console.log(`Seeded ${users.length} users.`);
-
-    const [admin, chefRahul, chefPriya, amit, neha, ravi] = users;
-
-    // ========== KITCHENS ==========
-    const kitchens = await Kitchen.insertMany([
-      {
-        name: "Rahul's Biryani House",
-        owner: chefRahul._id,
-        description:
-          "Authentic Hyderabadi Biryani made with love and tradition.",
-        cuisine: ["Biryani", "Mughlai", "North Indian"],
-        address: {
-          street: "45, MG Road",
-          city: "Hyderabad",
-          state: "Telangana",
-          pincode: "500001",
-        },
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/kitchens/biryani-house.jpg",
-        },
-        rating: 4.5,
-        totalReviews: 120,
-        isOpen: true,
-        deliveryTime: 35,
-        deliveryCharge: 30,
-      },
-      {
-        name: "Priya's South Kitchen",
-        owner: chefPriya._id,
-        description: "Fresh South Indian meals - Dosa, Idli, Vada and more.",
-        cuisine: ["South Indian", "Kerala", "Tamil"],
-        address: {
-          street: "12, Anna Nagar",
-          city: "Chennai",
-          state: "Tamil Nadu",
-          pincode: "600040",
-        },
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/kitchens/south-kitchen.jpg",
-        },
-        rating: 4.3,
-        totalReviews: 85,
-        isOpen: true,
-        deliveryTime: 25,
-        deliveryCharge: 20,
-      },
-      {
-        name: "Delhi Darbar",
-        owner: chefRahul._id,
-        description: "Royal Mughlai cuisine with kebabs, curries and naans.",
-        cuisine: ["Mughlai", "North Indian", "Tandoor"],
-        address: {
-          street: "78, Chandni Chowk",
-          city: "Delhi",
-          state: "Delhi",
-          pincode: "110006",
-        },
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/kitchens/delhi-darbar.jpg",
-        },
-        rating: 4.7,
-        totalReviews: 200,
-        isOpen: true,
-        deliveryTime: 40,
-        deliveryCharge: 40,
-      },
-    ]);
-
-    console.log(`Seeded ${kitchens.length} kitchens.`);
-
-    const [biryaniHouse, southKitchen, delhiDarbar] = kitchens;
-
-    // ========== MENU ITEMS ==========
-    const menuItems = await Menu.insertMany([
-      // Rahul's Biryani House items
-      {
-        name: "Chicken Biryani",
-        description:
-          "Aromatic basmati rice cooked with tender chicken pieces and spices.",
-        price: 250,
-        category: "non-veg",
-        foodType: "main-course",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/chicken-biryani.jpg",
-        },
-        kitchen: biryaniHouse._id,
-        isAvailable: true,
-        rating: 4.6,
-        totalOrders: 350,
-      },
-      {
-        name: "Mutton Biryani",
-        description: "Slow-cooked mutton with fragrant rice and saffron.",
-        price: 350,
-        category: "non-veg",
-        foodType: "main-course",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/mutton-biryani.jpg",
-        },
-        kitchen: biryaniHouse._id,
-        isAvailable: true,
-        rating: 4.8,
-        totalOrders: 200,
-      },
-      {
-        name: "Veg Biryani",
-        description:
-          "Mixed vegetables cooked in dum style with aromatic spices.",
-        price: 180,
-        category: "veg",
-        foodType: "main-course",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/veg-biryani.jpg",
-        },
-        kitchen: biryaniHouse._id,
-        isAvailable: true,
-        rating: 4.2,
-        totalOrders: 150,
-      },
-      {
-        name: "Chicken 65",
-        description: "Spicy deep-fried chicken starter with curry leaves.",
-        price: 200,
-        category: "non-veg",
-        foodType: "starter",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/chicken-65.jpg",
-        },
-        kitchen: biryaniHouse._id,
-        isAvailable: true,
-        rating: 4.4,
-        totalOrders: 180,
-      },
-      {
-        name: "Gulab Jamun",
-        description: "Soft milk dumplings soaked in rose-flavored sugar syrup.",
-        price: 80,
-        category: "veg",
-        foodType: "dessert",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/gulab-jamun.jpg",
-        },
-        kitchen: biryaniHouse._id,
-        isAvailable: true,
-        rating: 4.5,
-        totalOrders: 100,
-      },
-
-      // Priya's South Kitchen items
-      {
-        name: "Masala Dosa",
-        description: "Crispy rice crepe stuffed with spiced potato filling.",
-        price: 120,
-        category: "veg",
-        foodType: "main-course",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/masala-dosa.jpg",
-        },
-        kitchen: southKitchen._id,
-        isAvailable: true,
-        rating: 4.5,
-        totalOrders: 400,
-      },
-      {
-        name: "Idli Sambar",
-        description: "Steamed rice cakes served with hot sambar and chutneys.",
-        price: 80,
-        category: "veg",
-        foodType: "snack",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/idli-sambar.jpg",
-        },
-        kitchen: southKitchen._id,
-        isAvailable: true,
-        rating: 4.3,
-        totalOrders: 500,
-      },
-      {
-        name: "Medu Vada",
-        description: "Crispy urad dal fritters served with coconut chutney.",
-        price: 70,
-        category: "veg",
-        foodType: "snack",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/medu-vada.jpg",
-        },
-        kitchen: southKitchen._id,
-        isAvailable: true,
-        rating: 4.1,
-        totalOrders: 300,
-      },
-      {
-        name: "South Indian Thali",
-        description:
-          "Complete meal with rice, sambar, rasam, poriyal, curd and papad.",
-        price: 200,
-        category: "veg",
-        foodType: "thali",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/south-thali.jpg",
-        },
-        kitchen: southKitchen._id,
-        isAvailable: true,
-        rating: 4.6,
-        totalOrders: 250,
-      },
-      {
-        name: "Filter Coffee",
-        description: "Traditional South Indian filter coffee with fresh milk.",
-        price: 50,
-        category: "veg",
-        foodType: "beverage",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/filter-coffee.jpg",
-        },
-        kitchen: southKitchen._id,
-        isAvailable: true,
-        rating: 4.7,
-        totalOrders: 600,
-      },
-
-      // Delhi Darbar items
-      {
-        name: "Butter Chicken",
-        description: "Creamy tomato-based curry with tender tandoori chicken.",
-        price: 300,
-        category: "non-veg",
-        foodType: "main-course",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/butter-chicken.jpg",
-        },
-        kitchen: delhiDarbar._id,
-        isAvailable: true,
-        rating: 4.8,
-        totalOrders: 450,
-      },
-      {
-        name: "Dal Makhani",
-        description: "Slow-cooked black lentils in creamy butter gravy.",
-        price: 200,
-        category: "veg",
-        foodType: "main-course",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/dal-makhani.jpg",
-        },
-        kitchen: delhiDarbar._id,
-        isAvailable: true,
-        rating: 4.5,
-        totalOrders: 320,
-      },
-      {
-        name: "Paneer Tikka",
-        description:
-          "Marinated cottage cheese grilled in tandoor with bell peppers.",
-        price: 220,
-        category: "veg",
-        foodType: "starter",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/paneer-tikka.jpg",
-        },
-        kitchen: delhiDarbar._id,
-        isAvailable: true,
-        rating: 4.4,
-        totalOrders: 280,
-      },
-      {
-        name: "Seekh Kebab",
-        description: "Minced mutton kebabs grilled on skewers with spices.",
-        price: 280,
-        category: "non-veg",
-        foodType: "starter",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/seekh-kebab.jpg",
-        },
-        kitchen: delhiDarbar._id,
-        isAvailable: true,
-        rating: 4.6,
-        totalOrders: 190,
-      },
-      {
-        name: "Mughlai Thali",
-        description:
-          "Complete North Indian thali with naan, curry, dal, rice and dessert.",
-        price: 350,
-        category: "non-veg",
-        foodType: "thali",
-        image: {
-          public_id: "",
-          url: "https://res.cloudinary.com/demo/image/upload/v1/menu/mughlai-thali.jpg",
-        },
-        kitchen: delhiDarbar._id,
-        isAvailable: true,
-        rating: 4.7,
-        totalOrders: 150,
-      },
-    ]);
-
-    console.log(`Seeded ${menuItems.length} menu items.`);
-
-    // ========== ORDERS ==========
-    const orders = await Order.insertMany([
-      {
-        user: amit._id,
-        kitchen: biryaniHouse._id,
-        items: [
-          {
-            menuItem: menuItems[0]._id,
-            name: "Chicken Biryani",
-            price: 250,
-            quantity: 2,
-          },
-          {
-            menuItem: menuItems[3]._id,
-            name: "Chicken 65",
-            price: 200,
-            quantity: 1,
-          },
-        ],
-        deliveryAddress: {
-          street: "22, Jubilee Hills",
-          city: "Hyderabad",
-          state: "Telangana",
-          pincode: "500033",
-          phone: "9876543210",
-        },
-        subtotal: 700,
-        deliveryCharge: 30,
-        totalAmount: 730,
-        paymentMethod: "online",
-        paymentStatus: "paid",
-        orderStatus: "delivered",
-        deliveredAt: new Date("2025-07-05T14:30:00Z"),
-      },
-      {
-        user: neha._id,
-        kitchen: southKitchen._id,
-        items: [
-          {
-            menuItem: menuItems[5]._id,
-            name: "Masala Dosa",
-            price: 120,
-            quantity: 2,
-          },
-          {
-            menuItem: menuItems[9]._id,
-            name: "Filter Coffee",
-            price: 50,
-            quantity: 2,
-          },
-        ],
-        deliveryAddress: {
-          street: "5, T Nagar",
-          city: "Chennai",
-          state: "Tamil Nadu",
-          pincode: "600017",
-          phone: "9123456789",
-        },
-        subtotal: 340,
-        deliveryCharge: 20,
-        totalAmount: 360,
-        paymentMethod: "upi",
-        paymentStatus: "paid",
-        orderStatus: "delivered",
-        deliveredAt: new Date("2025-07-06T10:00:00Z"),
-      },
-      {
-        user: ravi._id,
-        kitchen: delhiDarbar._id,
-        items: [
-          {
-            menuItem: menuItems[10]._id,
-            name: "Butter Chicken",
-            price: 300,
-            quantity: 1,
-          },
-          {
-            menuItem: menuItems[11]._id,
-            name: "Dal Makhani",
-            price: 200,
-            quantity: 1,
-          },
-          {
-            menuItem: menuItems[12]._id,
-            name: "Paneer Tikka",
-            price: 220,
-            quantity: 1,
-          },
-        ],
-        deliveryAddress: {
-          street: "34, Connaught Place",
-          city: "Delhi",
-          state: "Delhi",
-          pincode: "110001",
-          phone: "9988776655",
-        },
-        subtotal: 720,
-        deliveryCharge: 40,
-        totalAmount: 760,
-        paymentMethod: "online",
-        paymentStatus: "paid",
-        orderStatus: "preparing",
-      },
-      {
-        user: amit._id,
-        kitchen: delhiDarbar._id,
-        items: [
-          {
-            menuItem: menuItems[14]._id,
-            name: "Mughlai Thali",
-            price: 350,
-            quantity: 2,
-          },
-        ],
-        deliveryAddress: {
-          street: "22, Jubilee Hills",
-          city: "Hyderabad",
-          state: "Telangana",
-          pincode: "500033",
-          phone: "9876543210",
-        },
-        subtotal: 700,
-        deliveryCharge: 40,
-        totalAmount: 740,
-        paymentMethod: "cod",
-        paymentStatus: "pending",
-        orderStatus: "placed",
-      },
-      {
-        user: neha._id,
-        kitchen: biryaniHouse._id,
-        items: [
-          {
-            menuItem: menuItems[1]._id,
-            name: "Mutton Biryani",
-            price: 350,
-            quantity: 1,
-          },
-          {
-            menuItem: menuItems[4]._id,
-            name: "Gulab Jamun",
-            price: 80,
-            quantity: 2,
-          },
-        ],
-        deliveryAddress: {
-          street: "5, T Nagar",
-          city: "Chennai",
-          state: "Tamil Nadu",
-          pincode: "600017",
-          phone: "9123456789",
-        },
-        subtotal: 510,
-        deliveryCharge: 30,
-        totalAmount: 540,
-        paymentMethod: "upi",
-        paymentStatus: "paid",
-        orderStatus: "out_for_delivery",
-      },
-      {
-        user: ravi._id,
-        kitchen: southKitchen._id,
-        items: [
-          {
-            menuItem: menuItems[8]._id,
-            name: "South Indian Thali",
-            price: 200,
-            quantity: 1,
-          },
-        ],
-        deliveryAddress: {
-          street: "34, Connaught Place",
-          city: "Delhi",
-          state: "Delhi",
-          pincode: "110001",
-          phone: "9988776655",
-        },
-        subtotal: 200,
-        deliveryCharge: 20,
-        totalAmount: 220,
-        paymentMethod: "online",
-        paymentStatus: "failed",
-        orderStatus: "cancelled",
-        cancelReason: "Payment failed during processing",
-      },
-    ]);
-
-    console.log(`Seeded ${orders.length} orders.`);
-
-    console.log("\n✅ Seeding completed successfully!");
-    console.log("-----------------------------------");
-    console.log(`Users: ${users.length}`);
-    console.log(`Kitchens: ${kitchens.length}`);
-    console.log(`Menu Items: ${menuItems.length}`);
-    console.log(`Orders: ${orders.length}`);
-    console.log("-----------------------------------");
-    console.log("\nLogin credentials for all users:");
-    console.log("Password: Password@123");
-    console.log("Admin:    admin@cloudkitchen.com");
-    console.log("Chef 1:   rahul@kitchen.com");
-    console.log("Chef 2:   priya@kitchen.com");
-    console.log("Customer: amit@gmail.com");
-    console.log("Customer: neha@gmail.com");
-    console.log("Customer: ravi@gmail.com");
-
-    await mongoose.connection.close();
-    process.exit(0);
-  } catch (err) {
-    console.error("❌ Seeding failed:", err.message);
-    await mongoose.connection.close();
+  // Find admin user
+  const admin = await User.findOne({ email: "admin@gmail.com" });
+  if (!admin) {
+    console.log("Admin user not found. Run seed-admin first.");
     process.exit(1);
   }
-};
+
+  // Clear existing data
+  await Kitchen.deleteMany({});
+  await Menu.deleteMany({});
+  console.log("Cleared existing kitchens and menu items");
+
+  // Create Kitchens
+  const kitchens = await Kitchen.insertMany([
+    {
+      name: "Spice Garden",
+      owner: admin._id,
+      description:
+        "Authentic North Indian cuisine with rich flavors and fresh spices",
+      cuisine: ["North Indian", "Mughlai", "Tandoor"],
+      address: {
+        street: "45 MG Road",
+        city: "Mumbai",
+        state: "Maharashtra",
+        pincode: "400001",
+      },
+      image: {
+        public_id: "",
+        url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400",
+      },
+      rating: 4.5,
+      totalReviews: 120,
+      isOpen: true,
+      deliveryTime: 30,
+      deliveryCharge: 25,
+    },
+    {
+      name: "Dragon Wok",
+      owner: admin._id,
+      description: "Fiery Chinese and Asian fusion dishes made fresh to order",
+      cuisine: ["Chinese", "Thai", "Asian"],
+      address: {
+        street: "12 Park Street",
+        city: "Mumbai",
+        state: "Maharashtra",
+        pincode: "400002",
+      },
+      image: {
+        public_id: "",
+        url: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400",
+      },
+      rating: 4.2,
+      totalReviews: 85,
+      isOpen: true,
+      deliveryTime: 25,
+      deliveryCharge: 30,
+    },
+    {
+      name: "Green Leaf Kitchen",
+      owner: admin._id,
+      description:
+        "Healthy, organic, and 100% vegetarian meals for mindful eating",
+      cuisine: ["South Indian", "Healthy", "Vegan"],
+      address: {
+        street: "8 Brigade Road",
+        city: "Bangalore",
+        state: "Karnataka",
+        pincode: "560001",
+      },
+      image: {
+        public_id: "",
+        url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400",
+      },
+      rating: 4.7,
+      totalReviews: 200,
+      isOpen: true,
+      deliveryTime: 20,
+      deliveryCharge: 0,
+    },
+    {
+      name: "Biryani Blues",
+      owner: admin._id,
+      description: "Hyderabadi dum biryani cooked in traditional handi style",
+      cuisine: ["Hyderabadi", "Biryani", "Mughlai"],
+      address: {
+        street: "23 Jubilee Hills",
+        city: "Hyderabad",
+        state: "Telangana",
+        pincode: "500033",
+      },
+      image: {
+        public_id: "",
+        url: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400",
+      },
+      rating: 4.6,
+      totalReviews: 310,
+      isOpen: true,
+      deliveryTime: 35,
+      deliveryCharge: 20,
+    },
+    {
+      name: "Pizza Planet",
+      owner: admin._id,
+      description: "Wood-fired pizzas with imported cheese and fresh toppings",
+      cuisine: ["Italian", "Pizza", "Pasta"],
+      address: {
+        street: "5 Connaught Place",
+        city: "Delhi",
+        state: "Delhi",
+        pincode: "110001",
+      },
+      image: {
+        public_id: "",
+        url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
+      },
+      rating: 4.3,
+      totalReviews: 150,
+      isOpen: true,
+      deliveryTime: 40,
+      deliveryCharge: 40,
+    },
+  ]);
+
+  console.log(`Created ${kitchens.length} kitchens`);
+
+  // Menu items for Spice Garden
+  const spiceGardenMenu = [
+    {
+      name: "Butter Chicken",
+      description: "Creamy tomato-based curry with tender chicken",
+      price: 280,
+      category: "non-veg",
+      foodType: "main-course",
+      kitchen: kitchens[0]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=300",
+      },
+    },
+    {
+      name: "Paneer Tikka",
+      description: "Grilled cottage cheese marinated in spices",
+      price: 220,
+      category: "veg",
+      foodType: "starter",
+      kitchen: kitchens[0]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=300",
+      },
+    },
+    {
+      name: "Dal Makhani",
+      description: "Slow-cooked black lentils in butter and cream",
+      price: 180,
+      category: "veg",
+      foodType: "main-course",
+      kitchen: kitchens[0]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300",
+      },
+    },
+    {
+      name: "Garlic Naan",
+      description: "Soft naan bread with garlic butter",
+      price: 60,
+      category: "veg",
+      foodType: "snack",
+      kitchen: kitchens[0]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=300",
+      },
+    },
+    {
+      name: "Gulab Jamun",
+      description: "Deep-fried milk dumplings soaked in sugar syrup",
+      price: 80,
+      category: "veg",
+      foodType: "dessert",
+      kitchen: kitchens[0]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1666190050267-39e080073afe?w=300",
+      },
+    },
+    {
+      name: "Mango Lassi",
+      description: "Chilled yogurt drink with fresh mango pulp",
+      price: 90,
+      category: "veg",
+      foodType: "beverage",
+      kitchen: kitchens[0]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=300",
+      },
+    },
+  ];
+
+  // Menu items for Dragon Wok
+  const dragonWokMenu = [
+    {
+      name: "Chicken Manchurian",
+      description: "Crispy fried chicken in spicy Manchurian sauce",
+      price: 250,
+      category: "non-veg",
+      foodType: "starter",
+      kitchen: kitchens[1]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1525755662778-989d0524087e?w=300",
+      },
+    },
+    {
+      name: "Veg Fried Rice",
+      description: "Wok-tossed rice with fresh vegetables",
+      price: 180,
+      category: "veg",
+      foodType: "main-course",
+      kitchen: kitchens[1]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=300",
+      },
+    },
+    {
+      name: "Hakka Noodles",
+      description: "Stir-fried noodles with vegetables and soy sauce",
+      price: 160,
+      category: "veg",
+      foodType: "main-course",
+      kitchen: kitchens[1]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=300",
+      },
+    },
+    {
+      name: "Spring Rolls",
+      description: "Crispy rolls stuffed with cabbage and carrots",
+      price: 140,
+      category: "veg",
+      foodType: "starter",
+      kitchen: kitchens[1]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1536879933-7de5aa1a0b81?w=300",
+      },
+    },
+    {
+      name: "Hot & Sour Soup",
+      description: "Spicy soup with mushrooms, tofu and veggies",
+      price: 120,
+      category: "veg",
+      foodType: "starter",
+      kitchen: kitchens[1]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=300",
+      },
+    },
+  ];
+
+  // Menu items for Green Leaf Kitchen
+  const greenLeafMenu = [
+    {
+      name: "Masala Dosa",
+      description: "Crispy crepe with spiced potato filling",
+      price: 120,
+      category: "veg",
+      foodType: "main-course",
+      kitchen: kitchens[2]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1630383249896-424e482df921?w=300",
+      },
+    },
+    {
+      name: "Idli Sambar",
+      description: "Steamed rice cakes with lentil stew",
+      price: 80,
+      category: "veg",
+      foodType: "snack",
+      kitchen: kitchens[2]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=300",
+      },
+    },
+    {
+      name: "Quinoa Buddha Bowl",
+      description: "Quinoa with roasted veggies, avocado and tahini",
+      price: 320,
+      category: "vegan",
+      foodType: "main-course",
+      kitchen: kitchens[2]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=300",
+      },
+    },
+    {
+      name: "Green Smoothie",
+      description: "Spinach, banana, and almond milk blend",
+      price: 150,
+      category: "vegan",
+      foodType: "beverage",
+      kitchen: kitchens[2]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=300",
+      },
+    },
+    {
+      name: "Avocado Toast",
+      description: "Multigrain toast with smashed avocado and seeds",
+      price: 200,
+      category: "vegan",
+      foodType: "snack",
+      kitchen: kitchens[2]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?w=300",
+      },
+    },
+  ];
+
+  // Menu items for Biryani Blues
+  const biryaniMenu = [
+    {
+      name: "Chicken Dum Biryani",
+      description: "Slow-cooked basmati rice with spiced chicken",
+      price: 320,
+      category: "non-veg",
+      foodType: "main-course",
+      kitchen: kitchens[3]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=300",
+      },
+    },
+    {
+      name: "Mutton Biryani",
+      description: "Premium mutton pieces with fragrant rice",
+      price: 380,
+      category: "non-veg",
+      foodType: "main-course",
+      kitchen: kitchens[3]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=300",
+      },
+    },
+    {
+      name: "Veg Biryani",
+      description: "Mixed vegetables cooked with aromatic basmati",
+      price: 220,
+      category: "veg",
+      foodType: "main-course",
+      kitchen: kitchens[3]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=300",
+      },
+    },
+    {
+      name: "Raita",
+      description: "Cool yogurt with cucumber and mint",
+      price: 50,
+      category: "veg",
+      foodType: "snack",
+      kitchen: kitchens[3]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300",
+      },
+    },
+    {
+      name: "Phirni",
+      description: "Creamy rice pudding with cardamom and pistachios",
+      price: 90,
+      category: "veg",
+      foodType: "dessert",
+      kitchen: kitchens[3]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1571006628667-7956a2c4f98c?w=300",
+      },
+    },
+  ];
+
+  // Menu items for Pizza Planet
+  const pizzaMenu = [
+    {
+      name: "Margherita Pizza",
+      description: "Classic pizza with mozzarella and fresh basil",
+      price: 299,
+      category: "veg",
+      foodType: "main-course",
+      kitchen: kitchens[4]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=300",
+      },
+    },
+    {
+      name: "Pepperoni Pizza",
+      description: "Loaded with spicy pepperoni and cheese",
+      price: 399,
+      category: "non-veg",
+      foodType: "main-course",
+      kitchen: kitchens[4]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=300",
+      },
+    },
+    {
+      name: "Garlic Bread",
+      description: "Toasted bread with garlic butter and herbs",
+      price: 149,
+      category: "veg",
+      foodType: "starter",
+      kitchen: kitchens[4]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1619531040576-f9416740661b?w=300",
+      },
+    },
+    {
+      name: "Pasta Alfredo",
+      description: "Creamy white sauce pasta with mushrooms",
+      price: 249,
+      category: "veg",
+      foodType: "main-course",
+      kitchen: kitchens[4]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=300",
+      },
+    },
+    {
+      name: "Cold Coffee",
+      description: "Chilled coffee with ice cream",
+      price: 130,
+      category: "veg",
+      foodType: "beverage",
+      kitchen: kitchens[4]._id,
+      image: {
+        url: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=300",
+      },
+    },
+  ];
+
+  const allMenuItems = [
+    ...spiceGardenMenu,
+    ...dragonWokMenu,
+    ...greenLeafMenu,
+    ...biryaniMenu,
+    ...pizzaMenu,
+  ];
+  await Menu.insertMany(allMenuItems);
+  console.log(`Created ${allMenuItems.length} menu items`);
+
+  console.log("\n✅ Seed complete! Your kitchens:");
+  kitchens.forEach((k) =>
+    console.log(`   - ${k.name} (${k.cuisine.join(", ")})`),
+  );
+
+  await mongoose.disconnect();
+  process.exit(0);
+}
 
 seedData();
