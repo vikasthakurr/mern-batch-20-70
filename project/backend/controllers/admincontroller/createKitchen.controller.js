@@ -42,6 +42,9 @@ const createKitchen = asyncHandler(async (req, res) => {
   const kitchen = new Kitchen(kitchenData);
   await kitchen.save();
 
+  // Invalidate kitchens list cache
+  await invalidateCache("cache:*/api/v1/kitchens*");
+
   res.status(201).json({ message: "Kitchen created successfully", kitchen });
 });
 

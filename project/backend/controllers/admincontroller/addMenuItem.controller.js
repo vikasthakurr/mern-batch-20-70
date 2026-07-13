@@ -23,6 +23,9 @@ const addMenuItem = asyncHandler(async (req, res) => {
   const menuItem = new Menu(menuData);
   await menuItem.save();
 
+  // Invalidate menu cache for this kitchen
+  await invalidateCache(`cache:*/api/v1/menu/kitchen/${kitchenId}*`);
+
   res.status(201).json({ message: "Menu item added successfully", menuItem });
 });
 

@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import AdminLayout from "./components/AdminLayout";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { useTheme } from "./context/ThemeContext";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import KitchenMenu from "./pages/KitchenMenu";
@@ -17,12 +18,18 @@ import ManageKitchen from "./pages/admin/ManageKitchen";
 import ManageMenu from "./pages/admin/ManageMenu";
 import ManageOrders from "./pages/admin/ManageOrders";
 
+
 function App() {
   const location = useLocation();
   const isLandingPage = location.pathname === "/";
+  const { darkMode } = useTheme();
 
   return (
-    <>
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        darkMode ? "bg-gray-900 text-gray-100" : "bg-gray-50 text-gray-900"
+      }`}
+    >
       <Toaster position="top-right" />
       {!isLandingPage && <Navbar />}
       <Routes>
@@ -58,7 +65,7 @@ function App() {
           <Route path="orders" element={<ManageOrders />} />
         </Route>
       </Routes>
-    </>
+    </div>
   );
 }
 

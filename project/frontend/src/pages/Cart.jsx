@@ -1,11 +1,11 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  clearCart,
-  removeFromCart,
-  updateQuantity,
+    clearCart,
+    removeFromCart,
+    updateQuantity,
 } from "../redux/slices/cartSlice";
 import { placeOrder } from "../redux/slices/orderSlice";
 
@@ -75,12 +75,12 @@ const Cart = () => {
         <p className="text-gray-500 mb-6">
           Add items from a kitchen to get started
         </p>
-        <a
-          href="/kitchens"
+        <Link
+          to="/kitchens"
           className="bg-orange-500 text-white px-6 py-2 rounded-lg hover:bg-orange-600"
         >
           Browse Kitchens
-        </a>
+        </Link>
       </div>
     );
   }

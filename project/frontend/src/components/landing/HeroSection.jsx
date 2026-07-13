@@ -24,7 +24,7 @@ const HeroSection = () => {
     {
       id: 4,
       image:
-        "https://images.unsplash.com/photo-1482049016gy4-b62ce8e2061d?w=300&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1544025162-d76694265947?w=300&h=400&fit=crop",
       alt: "Grilled steak",
     },
     {

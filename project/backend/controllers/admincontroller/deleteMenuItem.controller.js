@@ -19,6 +19,9 @@ const deleteMenuItem = asyncHandler(async (req, res) => {
 
   await Menu.findByIdAndDelete(menuItemId);
 
+  // Invalidate menu cache for this kitchen
+  await invalidateCache(`cache:*/api/v1/menu/kitchen/${req.kitchen._id}*`);
+
   res.status(200).json({ message: "Menu item deleted successfully" });
 });
 

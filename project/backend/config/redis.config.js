@@ -15,6 +15,12 @@ redisClient.on("error", (err) => {
   console.error("Redis error:", err.message);
 });
 
-await redisClient.connect();
+// Connect gracefully — don't crash the server if Redis is unavailable
+try {
+  await redisClient.connect();
+} catch (err) {
+  console.error("Redis connection failed:", err.message);
+  console.warn("App will continue without caching.");
+}
 
 export default redisClient;

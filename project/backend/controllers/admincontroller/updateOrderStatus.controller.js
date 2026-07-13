@@ -34,6 +34,25 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
     );
   }
 
+  // Validate status transitions (must follow sequential flow, or cancel from any state)
+  const statusFlow = [
+    "placed",
+    "confirmed",
+    "preparing",
+    "out_for_delivery",
+    "delivered",
+  ];
+  if (orderStatus !== "cancelled") {
+    const currentIdx = statusFlow.indexOf(order.orderStatus);
+    const nextIdx = statusFlow.indexOf(orderStatus);
+    if (nextIdx <= currentIdx) {
+      throw new ApiError(
+        400,
+        `Cannot move from "${order.orderStatus}" to "${orderStatus}". Status can only move forward.`,
+      );
+    }
+  }
+
   order.orderStatus = orderStatus;
 
   if (orderStatus === "delivered") {

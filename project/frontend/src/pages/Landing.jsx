@@ -7,10 +7,17 @@ import LandingNavbar from "../components/landing/LandingNavbar";
 import MealPlans from "../components/landing/MealPlans";
 import MenuPreview from "../components/landing/MenuPreview";
 import ReferFriend from "../components/landing/ReferFriend";
+import { useTheme } from "../context/ThemeContext";
 
 const Landing = () => {
+  const { darkMode } = useTheme();
+
   return (
-    <div className="bg-black min-h-screen text-white font-serif">
+    <div
+      className={`min-h-screen font-serif ${
+        darkMode ? "bg-black text-white" : "bg-white text-gray-900"
+      }`}
+    >
       <LandingNavbar />
       <HeroSection />
       <HowItWorks />

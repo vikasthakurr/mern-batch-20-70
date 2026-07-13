@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../api/axios";
-import { addToCart } from "../redux/slices/cartSlice";
+import { addToCart, updateQuantity } from "../redux/slices/cartSlice";
 
 const KitchenMenu = () => {
   const { kitchenId } = useParams();
@@ -120,12 +120,52 @@ const KitchenMenu = () => {
               </div>
               <div className="text-right">
                 <p className="font-bold text-lg">₹{item.price}</p>
-                <button
-                  onClick={() => handleAddToCart(item)}
-                  className="mt-2 bg-orange-500 text-white px-4 py-1 rounded-lg text-sm hover:bg-orange-600"
-                >
-                  Add +
-                </button>
+                {(() => {
+                  const cartItem = items.find((ci) => ci.menuItem === item._id);
+                  if (cartItem) {
+                    return (
+                      <div className="mt-2 flex items-center border border-orange-500 rounded-lg overflow-hidden">
+                        <button
+                          onClick={() =>
+                            dispatch(
+                              updateQuantity({
+                                menuItem: item._id,
+                                quantity: cartItem.quantity - 1,
+                              }),
+                            )
+                          }
+                          className="px-3 py-1 text-orange-500 hover:bg-orange-50 font-bold"
+                        >
+                          −
+                        </button>
+                        <span className="px-3 py-1 font-semibold text-orange-600">
+                          {cartItem.quantity}
+                        </span>
+                        <button
+                          onClick={() =>
+                            dispatch(
+                              updateQuantity({
+                                menuItem: item._id,
+                                quantity: cartItem.quantity + 1,
+                              }),
+                            )
+                          }
+                          className="px-3 py-1 text-orange-500 hover:bg-orange-50 font-bold"
+                        >
+                          +
+                        </button>
+                      </div>
+                    );
+                  }
+                  return (
+                    <button
+                      onClick={() => handleAddToCart(item)}
+                      className="mt-2 bg-orange-500 text-white px-4 py-1 rounded-lg text-sm hover:bg-orange-600"
+                    >
+                      Add +
+                    </button>
+                  );
+                })()}
               </div>
             </div>
           ))}
@@ -134,12 +174,12 @@ const KitchenMenu = () => {
 
       {/* Floating Cart Badge */}
       {cartItemCount > 0 && (
-        <a
-          href="/cart"
+        <Link
+          to="/cart"
           className="fixed bottom-6 right-6 bg-green-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-700 flex items-center gap-2"
         >
           🛒 {cartItemCount} items in cart
-        </a>
+        </Link>
       )}
     </div>
   );

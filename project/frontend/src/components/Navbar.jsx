@@ -1,21 +1,40 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 import { logout } from "../redux/slices/authSlice.js";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { items } = useSelector((state) => state.cart);
+  const { darkMode } = useTheme();
   const dispatch = useDispatch();
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav
+      className={`shadow-md sticky top-0 z-50 ${
+        darkMode ? "bg-gray-900 shadow-gray-800" : "bg-white"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-orange-500">
-          🍳 CloudKitchen
+        <Link
+          to="/"
+          className={`text-2xl font-bold ${
+            darkMode ? "text-orange-400" : "text-orange-500"
+          }`}
+        >
+          CloudKitchen
         </Link>
 
         <div className="flex items-center gap-4">
-          <Link to="/kitchens" className="text-gray-700 hover:text-orange-500">
+          <Link
+            to="/kitchens"
+            className={`${
+              darkMode
+                ? "text-gray-300 hover:text-orange-400"
+                : "text-gray-700 hover:text-orange-500"
+            }`}
+          >
             Kitchens
           </Link>
 
@@ -23,15 +42,36 @@ const Navbar = () => {
             <>
               <Link
                 to="/my-orders"
-                className="text-gray-700 hover:text-orange-500"
+                className={`${
+                  darkMode
+                    ? "text-gray-300 hover:text-orange-400"
+                    : "text-gray-700 hover:text-orange-500"
+                }`}
               >
                 My Orders
               </Link>
               <Link
                 to="/cart"
-                className="text-gray-700 hover:text-orange-500 relative"
+                className={`relative ${
+                  darkMode
+                    ? "text-gray-300 hover:text-orange-400"
+                    : "text-gray-700 hover:text-orange-500"
+                }`}
               >
-                🛒
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"
+                  />
+                </svg>
                 {items.length > 0 && (
                   <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                     {items.length}
@@ -40,19 +80,34 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/profile"
-                className="text-gray-700 hover:text-orange-500"
+                className={`${
+                  darkMode
+                    ? "text-gray-300 hover:text-orange-400"
+                    : "text-gray-700 hover:text-orange-500"
+                }`}
               >
                 Profile
               </Link>
               {user.role === "admin" && (
                 <Link
                   to="/admin"
-                  className="text-orange-600 font-medium hover:text-orange-700"
+                  className={`font-medium ${
+                    darkMode
+                      ? "text-orange-400 hover:text-orange-300"
+                      : "text-orange-600 hover:text-orange-700"
+                  }`}
                 >
                   Admin
                 </Link>
               )}
-              <span className="text-sm text-gray-500">Hi, {user.username}</span>
+              <span
+                className={`text-sm ${
+                  darkMode ? "text-gray-400" : "text-gray-500"
+                }`}
+              >
+                Hi, {user.username}
+              </span>
+              <ThemeToggle />
               <button
                 onClick={() => dispatch(logout())}
                 className="bg-red-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-red-600"
@@ -62,7 +117,15 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Link to="/login" className="text-gray-700 hover:text-orange-500">
+              <ThemeToggle />
+              <Link
+                to="/login"
+                className={`${
+                  darkMode
+                    ? "text-gray-300 hover:text-orange-400"
+                    : "text-gray-700 hover:text-orange-500"
+                }`}
+              >
                 Login
               </Link>
               <Link

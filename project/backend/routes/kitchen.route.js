@@ -1,12 +1,15 @@
 import express from "express";
 import { cache } from "../middleware/cache.middle.js";
 import Kitchen from "../models/kitchen.model.js";
+import asyncHandler from "../utils/asyncHandler.util.js";
 
 const kitchenRoute = express.Router();
 
 // Get all kitchens (public, cached for 2 minutes)
-kitchenRoute.get("/", cache(120), async (req, res) => {
-  try {
+kitchenRoute.get(
+  "/",
+  cache(120),
+  asyncHandler(async (req, res) => {
     const { city, cuisine, search, page = 1, limit = 10 } = req.query;
 
     const filter = { isOpen: true };
@@ -31,14 +34,14 @@ kitchenRoute.get("/", cache(120), async (req, res) => {
         pages: Math.ceil(total / limit),
       },
     });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+  }),
+);
 
 // Get single kitchen by ID (public, cached for 2 minutes)
-kitchenRoute.get("/:kitchenId", cache(120), async (req, res) => {
-  try {
+kitchenRoute.get(
+  "/:kitchenId",
+  cache(120),
+  asyncHandler(async (req, res) => {
     const kitchen = await Kitchen.findById(req.params.kitchenId).select(
       "-owner",
     );
@@ -48,9 +51,7 @@ kitchenRoute.get("/:kitchenId", cache(120), async (req, res) => {
     }
 
     res.status(200).json({ kitchen });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+  }),
+);
 
 export default kitchenRoute;
