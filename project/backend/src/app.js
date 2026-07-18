@@ -2,13 +2,18 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
+import path from "path";
 import swaggerUi from "swagger-ui-express";
+import { fileURLToPath } from "url";
 import swaggerSpec from "../config/swagger.config.js";
 import adminRoute from "../routes/admin.route.js";
 import authRoute from "../routes/auth.route.js";
 import kitchenRoute from "../routes/kitchen.route.js";
 import menuRoute from "../routes/menu.route.js";
 import orderRoute from "../routes/order.route.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -24,11 +29,8 @@ app.use(morgan("dev"));
 // Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Routes
-app.get("/", (req, res) => {
-  res.json({ message: "Cloud Kitchen API is running" });
-});
+// Serve frontend dist as static files
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 // Swagger API Docs
 app.use(
@@ -45,6 +47,11 @@ app.use("/api/v1/admin", adminRoute);
 app.use("/api/v1/kitchens", kitchenRoute);
 app.use("/api/v1/menu", menuRoute);
 app.use("/api/v1/orders", orderRoute);
+
+// Serve frontend index.html for all non-API routes (SPA support)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist", "index.html"));
+});
 
 // 404 handler
 app.use((req, res) => {
