@@ -30,7 +30,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Serve frontend dist as static files
-app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+app.use(express.static(path.join(__dirname, "../dist")));
 
 // Swagger API Docs
 app.use(
@@ -49,8 +49,8 @@ app.use("/api/v1/menu", menuRoute);
 app.use("/api/v1/orders", orderRoute);
 
 // Serve frontend index.html for all non-API routes (SPA support)
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../../frontend/dist", "index.html"));
+app.get("/{*path}", (req, res) => {
+  res.sendFile(path.join(__dirname, "../dist", "index.html"));
 });
 
 // 404 handler
